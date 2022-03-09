@@ -17,16 +17,15 @@ public class LargestRectangleInHistogram {
 
         int i = 0;
 
-        for(String val : br.readLine().split(" ")) {
+        for(var val : br.readLine().split(" ")) {
             histogram[i++] = Integer.parseInt(val);
         }
 
         Integer[] leftrSmaller = new Integer[sizeOfArray];
-
         Integer[] rightSmaller = new Integer[sizeOfArray];
-
         Stack<Integer> stack = new Stack<>();
 
+        // Here we find the next smaller element for left side.
         for(i=0;i<sizeOfArray;i++) {
             while(!stack.isEmpty() && histogram[stack.peek()] >= histogram[i]) {
                 stack.pop();
@@ -39,6 +38,7 @@ public class LargestRectangleInHistogram {
             stack.push(i);
         }
 
+        // Here we find the next smaller element for right side.
         for(i = sizeOfArray-1 ; i>=0 ; i--) {
             while(!stack.isEmpty() && histogram[stack.peek()] >= histogram[i]) {
                 stack.pop();
@@ -57,6 +57,7 @@ public class LargestRectangleInHistogram {
 
         Integer maxRectangleArea = 0;
 
+        // Here we find the largest rectangle area.
         for(i=0;i<sizeOfArray;i++) {
             int curr = (rightSmaller[i] - leftrSmaller[i] - 1) * histogram[i];
             maxRectangleArea = Math.max(curr,maxRectangleArea);
